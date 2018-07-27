@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 01:14:30 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/25 19:43:19 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/27 10:53:08 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,23 +150,25 @@
 
 //Max's ox, oy, oz
 
-t_coord			ft_rotate(t_fdf *fdf, float x, float y, float z)
+t_coord			ft_rotate(t_fdf *fdf, float x, float y, float z, int color)
 {
 	t_coord	coord;
 
-	printf("degrees: x: %f, y: %f, z: %f\n", fdf->rot->x_degree, fdf->rot->y_degree, fdf->rot->z_degree);
-	coord.x = x * (cos(fdf->rot->y_degree) * cos(fdf->rot->z_degree))
-			- y * (sin(fdf->rot->z_degree) * cos(fdf->rot->y_degree))
-			+ z * (sin(fdf->rot->y_degree));
-	printf("x: %f\n", coord.x);
-	coord.y = x * (sin(fdf->rot->x_degree) * sin(fdf->rot->y_degree) * cos(fdf->rot->z_degree) + cos(fdf->rot->x_degree) * sin(fdf->rot->z_degree))
-			+ y * (-sin(fdf->rot->x_degree) * sin(fdf->rot->y_degree) * sin(fdf->rot->z_degree) + cos(fdf->rot->x_degree) * cos(fdf->rot->z_degree))
-			- z * (sin(fdf->rot->x_degree) * cos(fdf->rot->y_degree));
-	printf("y: %f\n", coord.y);
-	coord.z = x * (-cos(fdf->rot->x_degree) * sin(fdf->rot->y_degree) * cos(fdf->rot->z_degree) - sin(fdf->rot->x_degree) * sin(fdf->rot->z_degree))
-			+ y * (cos(fdf->rot->x_degree) * sin(fdf->rot->y_degree) * sin(fdf->rot->z_degree) + sin(fdf->rot->x_degree) * cos(fdf->rot->z_degree))
-			+ z * cos(fdf->rot->x_degree) * cos(fdf->rot->y_degree);
-	printf("z: %f\n", coord.z);
+	coord.x = x * (cos(fdf->rot.y_degree) * cos(fdf->rot.z_degree))
+			- y * (sin(fdf->rot.z_degree) * cos(fdf->rot.y_degree))
+			+ z * (sin(fdf->rot.y_degree));
+	coord.y = x * (sin(fdf->rot.x_degree) * sin(fdf->rot.y_degree) * cos(fdf->rot.z_degree) + cos(fdf->rot.x_degree) * sin(fdf->rot.z_degree))
+			+ y * (-sin(fdf->rot.x_degree) * sin(fdf->rot.y_degree) * sin(fdf->rot.z_degree) + cos(fdf->rot.x_degree) * cos(fdf->rot.z_degree))
+			- z * (sin(fdf->rot.x_degree) * cos(fdf->rot.y_degree));
+	coord.z = x * (-cos(fdf->rot.x_degree) * sin(fdf->rot.y_degree) * cos(fdf->rot.z_degree) - sin(fdf->rot.x_degree) * sin(fdf->rot.z_degree))
+			+ y * (cos(fdf->rot.x_degree) * sin(fdf->rot.y_degree) * sin(fdf->rot.z_degree) + sin(fdf->rot.x_degree) * cos(fdf->rot.z_degree))
+			+ z * cos(fdf->rot.x_degree) * cos(fdf->rot.y_degree);
+	if (color)
+		coord.color = color;
+	else if (z != 0.0)
+		coord.color = 0xFF0000;
+	else
+		coord.color = 0xFF00;
 	return (coord);
 }
 
@@ -174,11 +176,31 @@ t_coord			ft_rotate(t_fdf *fdf, float x, float y, float z)
 
 
 
+// float				ft_grad(int color1, int color2, float percent)
+// {
+// 	int red;
+// 	int green;
+// 	int blue;
 
+// 	if (color1 - color2 == 0)
+// 		return (color1);
+// 	red = (color1 >> 16) + ((color2 >> 16) - (color1 >> 16)) * percent;
+// 	green = (color1 >> 8 & 0xFF) + ((color2 >> 8 & 0xFF) - (color1 >> 8 & 0xFF)) * percent;
+// 	blue = (color1 & 0xFF) + ((color2 & 0xFF) - (color1 & 0xFF)) * percent;
+// 	return (red << 16 | green << 8 | blue);
+// }
 
+// float			ft_percent(int x, int y, int x2, int y2)
+// {
+// 	int length1;
+// 	int length2;
 
+// 	length1 = sqrt((x2 - x) * (x2 - x) + ((y2 - y) * (y2 - y)));
+// 	length2 = sqrt(x2 * x2 + y2 * y2);
+// 	return ((length2 - length1) / (float)length2);
+// }
 
-
+// void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color1, int color2)
 void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
 {
   int dx = abs(x2 - x1);
@@ -188,6 +210,7 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
   int x = x1 + sx;
   int y = y1;
   int i = 0;
+  float percent;
   
   if (dy <= dx)
   {
@@ -196,7 +219,11 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
     int d2 = (dy - dx) << 1;
     while(i++ <= dx)
     {
-    mlx_pixel_put(fdf->mlx, fdf->win, x, y, color == 0 ? 0xFF00 : 0xFF0000);
+		// printf("per0: %f\n", percent);
+    // mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
+	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
 		x += sx;
       if (d >0)
       {
@@ -212,9 +239,20 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
     int d = (dx << 1) - dy;
     int d1 = dx << 1;
     int d2 = (dx - dy) << 1;
-    mlx_pixel_put(fdf->mlx, fdf->win, x1, y1, color == 0 ? 0xFF00 : 0xFF0000);
+    // mlx_pixel_put(fdf->mlx, fdf->win, x1, y1, color);
+	// percent = ft_percent(x, y, x2, y2);
+		// printf("per1: %f\n", percent);
+	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
     while(i++ <= dy)
-    {mlx_pixel_put(fdf->mlx, fdf->win, x, y, color == 0 ? 0xFF00 : 0xFF0000);
+    {
+		// mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
+	// percent = ft_percent(x, y, x2, y2);
+		// printf("per2: %f\n", percent);
+	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
 		y += sy;
       if (d >0)
       {
@@ -223,7 +261,12 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
       }
       else
         d += d1;
-    mlx_pixel_put(fdf->mlx, fdf->win, x, y, color == 0 ? 0xFF00 : 0xFF0000);
+    // mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
+	// percent = ft_percent(x, y, x2, y2);
+		// printf("per3: %f\n", percent);
+	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
     }
   }
 }
@@ -300,6 +343,26 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
 // 	// 0xFFFFFF - mlx_get_color_value(fdf->mlx, (int)z)
 // }
 
+void			ft_freecoord(t_coord **coord, int y)
+{
+	int j;
+
+	j = 0;
+	if (!coord)
+		return ;
+	while (j < y)
+		if (coord[j++])
+			free(coord[j - 1]);
+	free(coord);
+}
+
+/*
+**._______________________________________________________________.
+**|	A function for putpixel into a window directly or onto image. |
+**|								||								  |
+**|								\/								  |
+**|_______________________________________________________________|
+*/
 
 void			lets_paint(t_fdf *fdf)
 {
@@ -308,6 +371,8 @@ void			lets_paint(t_fdf *fdf)
 	t_coord		**coord;
 
 	j = 0;
+	if (fdf->zoom < 0)
+		fdf->zoom = 0;
 	coord = (t_coord **)malloc(sizeof(t_coord *) * fdf->y);
 	while (j < fdf->y)
 	{
@@ -315,7 +380,7 @@ void			lets_paint(t_fdf *fdf)
 		i = 0;
 		while (i < fdf->x)
 		{
-			coord[j][i] = ft_rotate(fdf, fdf->zoom * (i - fdf->x / 2), fdf->zoom * (j - fdf->y / 2), (float)fdf->arr[j][i] * 10);
+			coord[j][i] = ft_rotate(fdf, fdf->zoom * (i - fdf->x / 2), fdf->zoom * (j - fdf->y / 2), fdf->zoom * fdf->height * fdf->arr[j][i].z, fdf->arr[j][i].color);
 			coord[j][i].x += WIDTH / 2;
 			coord[j][i].y += HEIGHT / 2;
 			i++;
@@ -328,82 +393,100 @@ void			lets_paint(t_fdf *fdf)
 		i = 0;
 		while (i + 1 < fdf->x)
 		{
-			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, fdf->arr[j][i + 1] - fdf->arr[j][i] > 0 ? fdf->arr[j][i + 1] : fdf->arr[j][i]);
-			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, fdf->arr[j + 1][i] - fdf->arr[j][i] > 0 ? fdf->arr[j + 1][i] : fdf->arr[j][i]);
+			// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, coord[j][i].color, coord[j][i + 1].color);
+			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, MAX(coord[j][i].color, coord[j][i + 1].color));
+			// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, coord[j][i].color, coord[j + 1][i].color);
+			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, MAX(coord[j][i].color, coord[j + 1][i].color));
 			i++;
 		}
-		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, fdf->arr[j + 1][i] - fdf->arr[j][i] > 0 ? fdf->arr[j + 1][i] : fdf->arr[j][i]);
+		// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, coord[j][i].color, coord[j + 1][i].color);
+		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, MAX(coord[j][i].color, coord[j + 1][i].color));
 		j++;
 	}
 	i = -1;
 	while (++i + 1 < fdf->x)
-		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, fdf->arr[j][i + 1] - fdf->arr[j][i] > 0 ? fdf->arr[j][i + 1] : fdf->arr[j][i]);
+		// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, coord[j][i].color, coord[j][i + 1].color);
+		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, MAX(coord[j][i].color, coord[j][i + 1].color));
+	ft_freecoord(coord, fdf->y);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 }
 
-static int		key_mapping(int key, t_fdf **fdf)
+static void		ft_delsplitted(char ***string)
 {
-	if (key == ESC)
-		exit(0);
-	else if (key == MACOS_W)
-		(*fdf)->curry -= 20;
-	else if (key == MACOS_A)
-		(*fdf)->currx -= 20;
-	else if (key == MACOS_D)
-		(*fdf)->currx += 20;
-	else if (key == MACOS_S)
-		(*fdf)->curry += 20;
-	else if (key == MACOS_UP)
-		(*fdf)->rot->x_degree += 0.05 * M_PI;
-	else if (key == MACOS_DOWN)
-		(*fdf)->rot->x_degree -= 0.05 * M_PI;
-	else if (key == MACOS_LEFT)
-		(*fdf)->rot->y_degree -= 0.05 * M_PI;
-	else if (key == MACOS_RIGHT)
-		(*fdf)->rot->y_degree += 0.05 * M_PI;
-	else if (key == 6)
-		(*fdf)->rot->z_degree -= 0.05 * M_PI;
-	else if (key == 7)
-		(*fdf)->rot->z_degree += 0.05 * M_PI;
-	else if (key == MACOS_PLUS || key == MACOS_PL)
-		(*fdf)->zoom += 10;
-	else if (key == MACOS_MINUS || key == MACOS_MIN)
-		(*fdf)->zoom -= 10;
-	mlx_clear_window((*fdf)->mlx, (*fdf)->win);
-	lets_paint(*fdf);
+	int i;
+	int j;
 
-	return (0);
+	j = 0;
+	while (string[j])
+	{
+		i = 0;
+		while (string[j][i])
+			if (string[j][i++])
+				free(string[j][i - 1]);
+		if (string[j++])
+			free(string[j - 1]);
+	}
+	if (string)
+		free(string);
 }
 
-static int		**make_arr(char *str, int x, int y, char *line)
+static t_color	**ft_givearr(char ***string, int x, int y, t_color **arr)
+{
+	int i;
+	int j;
+	int k;
+
+	j = -1;
+	while (++j < y)
+	{
+		arr[j] = (t_color *)malloc(sizeof(t_color) * x);
+		i = -1;
+		while (++i < x)
+		{
+			k = 0;
+			arr[j][i].z = ft_atoi(string[j][i]);
+			while (ft_isdigit(string[j][i][k]))
+				k++;
+			if (string[j][i][k++])
+			{
+				if (string[j][i][k] == '0' && string[j][i][k + 1] == 'x')
+				{
+					arr[j][i].color = ft_atoi_base(string[j][i] + k + 2, 16);
+					k += 2;
+				}
+				else
+					arr[j][i].color = ft_atoi(string[j][i] + k);
+			}
+		}
+	}
+	return (arr);
+}
+
+static t_color	**make_arr(char *str, int x, int y, char *line)
 {
 	int		fd;
 	int		i;
 	int		j;
-	int		**arr;
+	int		k;
+	t_color	**arr;
 	char	***string;
 
 	i = 0;
-	string = (char ***)malloc(sizeof(char **) * y);
+	if (!(string = (char ***)malloc(sizeof(char **) * (y + 1))))
+		return (0);
+	string[y] = 0;
 	fd = open(str, O_RDONLY);
 	while (get_next_line(fd, &line))
+	{
 		string[i++] = ft_strsplit(line, ' ');
+		ft_strdel(&line);
+	}
 	close(fd);
 	j = 0;
-	arr = (int **)malloc(sizeof(int *) * y);
-	while (j < y)
-	{
-		arr[j] = (int *)malloc(sizeof(int) * x);
-		i = 0;
-		while (i < x)
-		{
-		// 	if (string[j][i][0] == '0' && string[j][i][1] == 'x')
-				arr[j][i] = ft_atoi_hex(string[j][i]);
-		// 	else
-				arr[j][i] = ft_atoi(string[j][i]);
-			i++;
-		}
-		j++;
-	}
+	if (!(arr = (t_color **)malloc(sizeof(t_color *) * y)))
+		return (0);
+	ft_givearr(string, x, y, arr);
+	ft_delsplitted(string);
 	return (arr);
 }
 
@@ -451,21 +534,12 @@ static int		get_x(char *str)
 	return (x);
 }
 
-static int		ft_exit(void *param)
-{
-	exit (0);
-}
-
 int				main(int argc, char **argv)
 {
 	int		x;
 	int		y;
 	t_fdf	*fdf;
-	void	*mlx_ptr;
-	void	*win_ptr;
 	char	*line;
-	int		**arr;
-	char	***string;
 
 	if (argc != 2)
 	{
@@ -478,17 +552,13 @@ int				main(int argc, char **argv)
 		ft_printf("Invalid map.\n");
 		return (-1);
 	}
-	// int fd = open(argv[1], O_RDONLY);
-	// while (get_next_line(fd, &line))
-	// {
-	// 	ft_printf("%s\n", line);
-	// 	ft_strdel(&line);
-	// }
-	// get_next_line(fd, &line);
-	// ft_printf("%s", line);
-	// arr = make_arr(argv[1], x, y, line);
-	// fdf = new_fdf(arr, x, y);
-
+	fdf = new_fdf(make_arr(argv[1], x, y, line), x, y);
+	lets_paint(fdf);
+	mlx_hook(fdf->win, 2, 0, key_mapping, fdf);
+	mlx_hook(fdf->win, 17, 0, ft_exit, (void *)0); //exit by presiing "x" button
+	mlx_loop(fdf->mlx);
+	return (0);
+}
 	// // checking the matrix int **arr
 	
 	// int i = 0;
@@ -498,20 +568,12 @@ int				main(int argc, char **argv)
 	// 	i = 0;
 	// 	while (i < x)
 	// 	{
-	// 		if (arr[j][i] == 0)
-	// 			ft_printf("00 ");
-	// 		else
-	// 			ft_printf("%d ", arr[j][i]);
+	// 		// if (arr[j][i].z == 0)
+	// 		// 	ft_printf("00 ");
+	// 		// else
+	// 			ft_printf("%d ", arr[j][i].color);
 	// 		i++;
 	// 	}
 	// 	ft_printf("\n");
 	// 	j++;
 	// }
-	
-	// lets_paint(fdf);
-	// mlx_hook(fdf->win, 2, 0, key_mapping, &fdf);
-	// mlx_hook(fdf->win, 17, 0, ft_exit, (void *)0); //exit by presiing "x" button
-	// mlx_loop(fdf->mlx);
-	system("leaks fdf > leaks");
-	return (0);
-}

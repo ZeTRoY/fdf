@@ -6,7 +6,7 @@
 #    By: aroi <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/14 04:39:27 by aroi              #+#    #+#              #
-#    Updated: 2018/07/25 11:30:27 by aroi             ###   ########.fr        #
+#    Updated: 2018/07/26 18:36:16 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,12 @@ FLAGS	=	-Wall -Wextra -Werror
 # HEADER	= -I libft/
 
 SRC		=	main.c \
-			fdf_struct.c
+			fdf_struct.c \
+			key_bindings.c
 
 OBJ		=	main.o \
-			fdf_struct.o
+			fdf_struct.o \
+			key_bindings.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<

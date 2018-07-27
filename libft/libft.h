@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 15:39:32 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/23 16:50:55 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/26 13:36:35 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <wchar.h>
+# include "printf.h"
 
 # define LONG 922337203685477580
 
@@ -112,6 +113,7 @@ int					ft_sqrt(uintmax_t n);
 int					ft_ishex(int c);
 int					ft_isnumber(char *str);
 int					ft_ishexnumber(char *str);
-int					ft_atoi_hex(const char *str);
+int					ft_atoi_base(const char *str, int base);
+void				ft_delarr(void **arr, int y);
 
 #endif

@@ -6,25 +6,12 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 16:14:01 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/14 04:25:00 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/26 10:23:43 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PRINTF_H
 # define PRINTF_H
-
-enum cast
-{
-	ZERO,
-	H,
-	HH,
-	L,
-	LL,
-	J,
-	T,
-	Z,
-	BL
-};
 
 # define YEAR 1000
 # define MONTH 12
@@ -33,6 +20,18 @@ enum cast
 # include <stdarg.h>
 # include <stddef.h>
 # include "libft.h"
+
+enum				e_cast
+{
+	H = 1,
+	HH = 2,
+	L = 3,
+	LL = 4,
+	J = 5,
+	T = 6,
+	Z = 7,
+	BL = 8
+}					t_cast;
 
 typedef struct		s_printf
 {

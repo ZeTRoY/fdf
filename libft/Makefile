@@ -6,7 +6,7 @@
 #    By: aroi <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 17:42:00 by aroi              #+#    #+#              #
-#    Updated: 2018/07/23 16:51:16 by aroi             ###   ########.fr        #
+#    Updated: 2018/07/26 11:23:57 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,13 @@ CFLAGS	= -Wall -Werror -Wextra
 SRC =	color.c \
 		date_func.c \
 		ft_atoi.c \
-		ft_atoi_hex.c \
+		ft_atoi_base.c \
 		ft_bzero.c \
 		ft_cast_act.c \
 		ft_count_digits.c \
 		ft_count_letters.c \
 		ft_freearr.c \
+		ft_delarr.c \
 		ft_is.c \
 		ft_is_sigil.c \
 		ft_isalnum.c \
@@ -118,11 +119,12 @@ SRC =	color.c \
 OBJ =	color.o \
 		date_func.o \
 		ft_atoi.o \
-		ft_atoi_hex.o \
+		ft_atoi_base.o \
 		ft_bzero.o \
 		ft_cast_act.o \
 		ft_count_digits.o \
 		ft_count_letters.o \
+		ft_delarr.o \
 		ft_freearr.o \
 		ft_is.o \
 		ft_is_sigil.o \
@@ -216,17 +218,17 @@ OBJ =	color.o \
 		what_is_pt_two.o
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all

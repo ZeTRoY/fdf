@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_delarr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/17 16:38:46 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/26 21:11:24 by aroi             ###   ########.fr       */
+/*   Created: 2018/07/26 11:08:38 by aroi              #+#    #+#             */
+/*   Updated: 2018/07/26 14:52:24 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFF_SIZE 1000
-# include <unistd.h>
-# include <stdlib.h>
-
-int					get_next_line(int fd, char **line);
-
-typedef struct		s_line
+void		ft_delarr(void **arr, int y)
 {
-	struct s_line	*next;
-	int				fd;
-	char			*content;
-}					t_line;
+	int j;
 
-#endif
+	j = 0;
+	if (!arr)
+		return ;
+	while (j < y)
+	{
+		if (arr[j])
+			free(arr[j]);
+		j++;
+	}
+}

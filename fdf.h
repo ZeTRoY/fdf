@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 03:01:27 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/26 20:27:48 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/27 17:21:27 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 
 # define WIDTH 1366
 # define HEIGHT 768
-# define ESC 53
+# define ESC_BUTTON 53
+# define HELP_BUTTON 4
 # define MACOS_W 13
 # define MACOS_A 0
 # define MACOS_S 1
 # define MACOS_D 2
 # define MACOS_Z 6
 # define MACOS_X 7
+# define MACOS_BACKSPACE 51
 # define MACOS_PL 24
 # define MACOS_PLUS 69
 # define MACOS_MIN 27
@@ -76,6 +78,7 @@ typedef struct		s_fdf
 	struct s_rot	rot;
 	float			zoom;
 	float			height;
+	int				info;
 }					t_fdf;
 
 typedef struct		s_coord
@@ -90,5 +93,7 @@ t_fdf				*new_fdf(t_color **arr, int x, int y);
 int					ft_exit(void *param);
 int					key_mapping(int key, t_fdf *fdf);
 void				lets_paint(t_fdf *fdf);
+void				ft_create_image(void *mlx, t_img *image);
+void				ft_draw_info_table(t_fdf *fdf);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 01:14:30 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/27 10:53:08 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/27 17:24:52 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,32 +176,31 @@ t_coord			ft_rotate(t_fdf *fdf, float x, float y, float z, int color)
 
 
 
-// float				ft_grad(int color1, int color2, float percent)
-// {
-// 	int red;
-// 	int green;
-// 	int blue;
+float				ft_grad(int color1, int color2, float percent)
+{
+	int red;
+	int green;
+	int blue;
 
-// 	if (color1 - color2 == 0)
-// 		return (color1);
-// 	red = (color1 >> 16) + ((color2 >> 16) - (color1 >> 16)) * percent;
-// 	green = (color1 >> 8 & 0xFF) + ((color2 >> 8 & 0xFF) - (color1 >> 8 & 0xFF)) * percent;
-// 	blue = (color1 & 0xFF) + ((color2 & 0xFF) - (color1 & 0xFF)) * percent;
-// 	return (red << 16 | green << 8 | blue);
-// }
+	if (color1 - color2 == 0)
+		return (color1);
+	red = (color1 >> 16) + ((color2 >> 16) - (color1 >> 16)) * percent;
+	green = ((color1 >> 8) & 0xFF) + ((color2 >> 8 & 0xFF) - (color1 >> 8 & 0xFF)) * percent;
+	blue = (color1 & 0xFF) + ((color2 & 0xFF) - (color1 & 0xFF)) * percent;
+	return (red << 16 | green << 8 | blue);
+}
 
-// float			ft_percent(int x, int y, int x2, int y2)
-// {
-// 	int length1;
-// 	int length2;
+float			ft_percent(int i, int i1, int i2)
+{
+	if (i == i1)
+		return (0.0);
+	else if (i == i2)
+		return (1.0);
+	return ((float)(i - i1) / (i2 - i1));
+}
 
-// 	length1 = sqrt((x2 - x) * (x2 - x) + ((y2 - y) * (y2 - y)));
-// 	length2 = sqrt(x2 * x2 + y2 * y2);
-// 	return ((length2 - length1) / (float)length2);
-// }
-
-// void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color1, int color2)
-void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
+void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color1, int color2)
+// void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
 {
   int dx = abs(x2 - x1);
   int dy = abs(y2 - y1);
@@ -222,8 +221,8 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
 		// printf("per0: %f\n", percent);
     // mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
 	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
-		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
-		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, x1, x2));
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
 		x += sx;
       if (d >0)
       {
@@ -240,19 +239,15 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
     int d1 = dx << 1;
     int d2 = (dx - dy) << 1;
     // mlx_pixel_put(fdf->mlx, fdf->win, x1, y1, color);
-	// percent = ft_percent(x, y, x2, y2);
-		// printf("per1: %f\n", percent);
 	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
-		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
-		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(y, y1, y2));
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
     while(i++ <= dy)
     {
 		// mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
-	// percent = ft_percent(x, y, x2, y2);
-		// printf("per2: %f\n", percent);
 	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
-		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
-		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(y, y1, y2));
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
 		y += sy;
       if (d >0)
       {
@@ -262,11 +257,9 @@ void ft_draw_line(t_fdf *fdf, int x1, int y1, int x2, int y2, int color)
       else
         d += d1;
     // mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
-	// percent = ft_percent(x, y, x2, y2);
-		// printf("per3: %f\n", percent);
 	if (x >= 0 && y >= 0 && x <= WIDTH && y <= HEIGHT)
-		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(x, y, x2, y2));
-		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
+		*(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = ft_grad(color1, color2, ft_percent(y, y1, y2));
+		// *(int *)(fdf->img.addr + y * fdf->img.size + x * fdf->img.bpp) = color;
     }
   }
 }
@@ -393,20 +386,20 @@ void			lets_paint(t_fdf *fdf)
 		i = 0;
 		while (i + 1 < fdf->x)
 		{
-			// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, coord[j][i].color, coord[j][i + 1].color);
-			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, MAX(coord[j][i].color, coord[j][i + 1].color));
-			// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, coord[j][i].color, coord[j + 1][i].color);
-			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, MAX(coord[j][i].color, coord[j + 1][i].color));
+			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, coord[j][i].color, coord[j][i + 1].color);
+			// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, MAX(coord[j][i].color, coord[j][i + 1].color));
+			ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, coord[j][i].color, coord[j + 1][i].color);
+			// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, MAX(coord[j][i].color, coord[j + 1][i].color));
 			i++;
 		}
-		// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, coord[j][i].color, coord[j + 1][i].color);
-		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, MAX(coord[j][i].color, coord[j + 1][i].color));
+		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, coord[j][i].color, coord[j + 1][i].color);
+		// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j + 1][i].x, fdf->curry + coord[j + 1][i].y, MAX(coord[j][i].color, coord[j + 1][i].color));
 		j++;
 	}
 	i = -1;
 	while (++i + 1 < fdf->x)
-		// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, coord[j][i].color, coord[j][i + 1].color);
-		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, MAX(coord[j][i].color, coord[j][i + 1].color));
+		ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, coord[j][i].color, coord[j][i + 1].color);
+		// ft_draw_line(fdf, fdf->currx + coord[j][i].x, fdf->curry + coord[j][i].y, fdf->currx + coord[j][i + 1].x, fdf->curry + coord[j][i + 1].y, MAX(coord[j][i].color, coord[j][i + 1].color));
 	ft_freecoord(coord, fdf->y);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 }
@@ -534,6 +527,113 @@ static int		get_x(char *str)
 	return (x);
 }
 
+void			draw_a_circle(t_img img, int R)
+{
+	int x = 0;
+	int y = R;
+	int delta = 1 - 2 * y;
+	int error = 0;
+	while (y >= 0)
+	{
+		*(int *)(img.addr + (WIDTH / 2 + x) * img.bpp + img.size * (HEIGHT / 2 + y)) = 0x700000;
+   		*(int *)(img.addr + (WIDTH / 2 + x) * img.bpp + img.size * (HEIGHT / 2 - y)) = 0x700000;
+   		*(int *)(img.addr + (WIDTH / 2 - x) * img.bpp + img.size * (HEIGHT / 2 + y)) = 0x700000;
+   		*(int *)(img.addr + (WIDTH / 2 - x) * img.bpp + img.size * (HEIGHT / 2 - y)) = 0x700000;
+		error = 2 * (delta + y) - 1;
+		if ((delta < 0) && (error <= 0))
+		{
+			delta += 2 * ++x + 1;
+			continue;
+		}
+		if ((delta > 0) && (error > 0))
+		{
+			delta -= 2 * --y + 1;
+			continue;
+		}
+		delta += 2 * (++x - y--);
+	}
+}
+
+void			ft_draw_upper_part(t_img img)
+{
+	int i;
+	int j;
+
+	j = 0;
+	while (j < 70)
+	{
+		i = 0;
+		while (i < WIDTH)
+		{
+			*(int *)(img.addr + i * img.bpp + img.size * j) = 0x700000;
+			i++;
+		}
+		j++;
+	}
+	i = 0;
+	while (i < WIDTH)
+	{
+		*(int *)(img.addr + i * img.bpp + img.size * j) = 0xDC143C;
+		i++;
+	}
+}
+
+void			ft_draw_lower_part(t_img img)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = HEIGHT - 71;
+	while (i < WIDTH)
+	{
+		*(int *)(img.addr + i * img.bpp + img.size * j) = 0xDC143C;
+		i++;
+	}
+	while (++j < HEIGHT)
+	{
+		i = 0;
+		while (i < WIDTH)
+		{
+			*(int *)(img.addr + i * img.bpp + img.size * j) = 0x700000;
+			i++;
+		}
+	}
+}
+
+void			ft_draw_info_table(t_fdf *fdf)
+{
+	mlx_string_put(fdf->mlx, fdf->win, 10, 80, 0xFFFFFF, "MOVE MAP UP: W");
+	mlx_string_put(fdf->mlx, fdf->win, 10, 103, 0xFFFFFF, "MOVE MAP DOWN: S");
+	mlx_string_put(fdf->mlx, fdf->win, 10, 126, 0xFFFFFF, "MOVE MAP LEFT: A");
+	mlx_string_put(fdf->mlx, fdf->win, 10, 149, 0xFFFFFF, "MOVE MAP RIGHT: D");
+	mlx_string_put(fdf->mlx, fdf->win, 10, HEIGHT - 213, 0xFFFFFF, "ROTATE MAP ABOUT X +: ARROW UP");
+	mlx_string_put(fdf->mlx, fdf->win, 10, HEIGHT - 191, 0xFFFFFF, "ROTATE MAP ABOUT X -: ARROW DOWN");
+	mlx_string_put(fdf->mlx, fdf->win, 10, HEIGHT - 169, 0xFFFFFF, "ROTATE MAP ABOUT Y +: ARROW RIGHT");
+	mlx_string_put(fdf->mlx, fdf->win, 10, HEIGHT - 147, 0xFFFFFF, "ROTATE MAP ABOUT Y -: ARROW LEFT");
+	mlx_string_put(fdf->mlx, fdf->win, 10, HEIGHT - 125, 0xFFFFFF, "ROTATE MAP ABOUT Z +: X");
+	mlx_string_put(fdf->mlx, fdf->win, 10, HEIGHT - 103, 0xFFFFFF, "ROTATE MAP ABOUT Z -: Z");
+	mlx_string_put(fdf->mlx, fdf->win, 1160, 80, 0xFFFFFF, "ZOOM UP:     PAGE UP");
+	mlx_string_put(fdf->mlx, fdf->win, 1160, 102, 0xFFFFFF, "ZOOM DOWN: PAGE DOWN");
+	mlx_string_put(fdf->mlx, fdf->win, 1200, HEIGHT - 125, 0xFFFFFF, "RESET: BACKSPACE");
+	mlx_string_put(fdf->mlx, fdf->win, 1200, HEIGHT - 103, 0xFFFFFF, "EXIT:        ESC");
+}
+
+void			ft_show_intro(t_fdf *fdf)
+{
+	int i;
+	int j;
+	t_img	img;
+
+	ft_create_image(fdf->mlx, &img);
+	ft_draw_upper_part(img);
+	ft_draw_lower_part(img);
+	draw_a_circle(img, 130);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, img.img, 0, 0);
+	mlx_string_put(fdf->mlx, fdf->win, 615, HEIGHT / 2 - 11, 0xFF7777, "PRESS ANY KEY");
+	ft_draw_info_table(fdf);
+}
+
 int				main(int argc, char **argv)
 {
 	int		x;
@@ -553,7 +653,8 @@ int				main(int argc, char **argv)
 		return (-1);
 	}
 	fdf = new_fdf(make_arr(argv[1], x, y, line), x, y);
-	lets_paint(fdf);
+	system("afplay -v 0.8 ./music/Ludovico_Einaudi_-_Indaco.mp3 &");
+	ft_show_intro(fdf);
 	mlx_hook(fdf->win, 2, 0, key_mapping, fdf);
 	mlx_hook(fdf->win, 17, 0, ft_exit, (void *)0); //exit by presiing "x" button
 	mlx_loop(fdf->mlx);

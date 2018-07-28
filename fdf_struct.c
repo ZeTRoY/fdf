@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 06:00:11 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/28 17:18:01 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/28 20:33:37 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void			ft_create_image(void *mlx, t_img *image)
 	image->bpp /= 8;
 }
 
-t_fdf			*new_fdf(t_twovariables **arr, int x, int y)
+t_fdf			*new_fdf(t_color **arr, int x, int y)
 {
 	t_fdf	*fdf;
 

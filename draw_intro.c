@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 20:41:31 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/28 18:30:33 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/28 21:40:32 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void			ft_draw_lower_part(t_img img)
 	}
 }
 
-void			change_music(t_fdf *fdf, int key)
+void				change_music(t_fdf *fdf, int key)
 {
 	system("killall afplay");
 	if (key == MACOS_N)
@@ -87,7 +87,9 @@ void				ft_show_intro(t_fdf *fdf)
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 	mlx_string_put(fdf->mlx, fdf->win, 615, HEIGHT / 2 - 11,
 		0xFF7777, "PRESS ANY KEY");
-	mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 15, 35 - 11, 0xFFFFFF, "FDF");
-	mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 120, HEIGHT - 35 - 11, 0xFFFFFF, "Ludovico Einaudi - Indaco");
+	mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 15, 35 - 11,
+		0xFFFFFF, "FdF");
+	mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 120, HEIGHT - 35 - 11,
+		0xFFFFFF, "Ludovico Einaudi - Indaco");
 	ft_draw_info_table(fdf);
 }

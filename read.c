@@ -6,13 +6,13 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 20:45:14 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/28 17:05:48 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/28 20:34:59 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void				ft_delsplitted(char ***string)
+static void		ft_delsplitted(char ***string)
 {
 	int i;
 	int j;
@@ -31,7 +31,7 @@ static void				ft_delsplitted(char ***string)
 		free(string);
 }
 
-static void				ft_add_color(char *string, int *color)
+static void		ft_add_color(char *string, int *color)
 {
 	int k;
 
@@ -50,8 +50,7 @@ static void				ft_add_color(char *string, int *color)
 	}
 }
 
-static t_twovariables	**ft_givearr(char ***string, int x, int y,
-							t_twovariables **arr)
+static t_color	**ft_givearr(char ***string, int x, int y, t_color **arr)
 {
 	int i;
 	int j;
@@ -59,7 +58,7 @@ static t_twovariables	**ft_givearr(char ***string, int x, int y,
 	j = 0;
 	while (j < y)
 	{
-		arr[j] = (t_twovariables *)malloc(sizeof(t_twovariables) * x);
+		arr[j] = (t_color *)malloc(sizeof(t_color) * x);
 		i = 0;
 		while (i < x)
 		{
@@ -72,11 +71,11 @@ static t_twovariables	**ft_givearr(char ***string, int x, int y,
 	return (arr);
 }
 
-t_twovariables			**make_arr(char *str, int x, int y, char *line)
+t_color			**make_arr(char *str, int x, int y, char *line)
 {
 	int				i;
 	int				fd;
-	t_twovariables	**arr;
+	t_color			**arr;
 	char			***string;
 
 	i = 0;
@@ -90,56 +89,9 @@ t_twovariables			**make_arr(char *str, int x, int y, char *line)
 		ft_strdel(&line);
 	}
 	close(fd);
-	if (!(arr = (t_twovariables **)malloc(sizeof(t_twovariables *) * y)))
+	if (!(arr = (t_color **)malloc(sizeof(t_color *) * y)))
 		return (0);
 	ft_givearr(string, x, y, arr);
 	ft_delsplitted(string);
 	return (arr);
-}
-
-int						get_y(char *str)
-{
-	int		y;
-	int		res;
-	int		fd;
-	char	*line;
-
-	y = 0;
-	fd = open(str, O_RDONLY);
-	while ((res = get_next_line(fd, &line)) > 0)
-	{
-		y++;
-		ft_strdel(&line);
-	}
-	if (res < 0)
-		return (-1);
-	close(fd);
-	return (y);
-}
-
-int						get_x(char *str)
-{
-	int		x;
-	int		tmp;
-	int		i;
-	int		fd;
-	char	*line;
-
-	x = 0;
-	fd = open(str, O_RDONLY);
-	while (get_next_line(fd, &line))
-	{
-		tmp = 0;
-		i = -1;
-		while (line[++i])
-			if (line[i] != ' ' && (line[i + 1] == ' ' || !line[i + 1]))
-				tmp++;
-		ft_strdel(&line);
-		if (!x && x != tmp)
-			x = tmp;
-		else if (x != tmp || !x)
-			return (-1);
-	}
-	close(fd);
-	return (x);
 }

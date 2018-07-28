@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/26 18:25:38 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/28 18:40:04 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/28 19:26:23 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static inline void	reset(t_fdf *fdf)
 {
 	fdf->currx = 0.0;
 	fdf->curry = 0.0;
-	fdf->zoom = 20.0;
+	if (HEIGHT > WIDTH)
+		fdf->zoom = HEIGHT / fdf->y;
+	else
+		fdf->zoom = WIDTH / fdf->x;
 	fdf->height = 0.1;
 	fdf->rot.x_degree = 0.0;
 	fdf->rot.y_degree = 0.0;
@@ -62,7 +65,7 @@ int					key_mapping(int key, t_fdf *fdf)
 {
 	system("afplay -v 0.03 ./music/hitbox.mp3 &");
 	if (key == ESC_BUTTON)
-		ft_exit(&key);
+		ft_exit();
 	if (key == MACOS_W || key == MACOS_A || key == MACOS_D ||
 	key == MACOS_S || key == MACOS_UP || key == MACOS_DOWN || key == MACOS_LEFT
 	|| key == MACOS_RIGHT || key == MACOS_Z || key == MACOS_X)
@@ -87,7 +90,7 @@ int					key_mapping(int key, t_fdf *fdf)
 	return (0);
 }
 
-int					ft_exit()
+int					ft_exit(void)
 {
 	system("killall afplay");
 	exit(0);

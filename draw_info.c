@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 19:21:14 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/28 18:35:40 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/28 18:52:34 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,12 @@ void				ft_draw_info_table(t_fdf *fdf)
 	ft_draw_left_part(fdf);
 	ft_draw_right_part(fdf);
 	if (!fdf->music)
-		mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 120, HEIGHT - 35 - 11, 0xFFFFFF, "Ludovico Einaudi - Indaco");
+		mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 120, HEIGHT - 35 - 11,
+			0xFFFFFF, "Ludovico Einaudi - Indaco");
 	else if (fdf->music == 1)
-		mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 98, HEIGHT - 35 - 11, 0xFFFFFF, "Kyivstoner - Babosik");
+		mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 98, HEIGHT - 35 - 11,
+			0xFFFFFF, "Kyivstoner - Babosik");
 	else
-		mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 80, HEIGHT - 35 - 11, 0xFFFFFF, "Eldjey - Hey Guys");
+		mlx_string_put(fdf->mlx, fdf->win, WIDTH / 2 - 80, HEIGHT - 35 - 11,
+			0xFFFFFF, "Eldjey - Hey Guys");
 }

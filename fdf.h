@@ -6,7 +6,7 @@
 /*   By: aroi <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 03:01:27 by aroi              #+#    #+#             */
-/*   Updated: 2018/07/28 18:05:11 by aroi             ###   ########.fr       */
+/*   Updated: 2018/07/28 20:33:03 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,18 @@ typedef struct		s_bresenham
 	int				x;
 	int				y;
 	int				color;
+	int				dx;
+	int				dy;
+	int				d;
+	int				d1;
+	int				d2;
 }					t_bresenham;
 
-typedef	struct		s_twovariables
+typedef	struct		s_color
 {
 	int				z;
 	int				color;
-}					t_twovariables;
+}					t_color;
 
 typedef struct		s_img
 {
@@ -87,7 +92,7 @@ typedef struct		s_fdf
 	void			*mlx;
 	void			*win;
 	t_img			img;
-	t_twovariables	**arr;
+	t_color			**arr;
 	t_coord			**coord;
 	float			currx;
 	float			curry;
@@ -100,12 +105,10 @@ typedef struct		s_fdf
 	int				music;
 }					t_fdf;
 
-t_fdf				*new_fdf(t_twovariables **arr, int x, int y);
+t_fdf				*new_fdf(t_color **arr, int x, int y);
 void				change_coord(t_fdf *fdf);
-int					get_x(char *str);
-int					get_y(char *str);
-t_twovariables		**make_arr(char *str, int x, int y, char *line);
-int					ft_exit();
+t_color				**make_arr(char *str, int x, int y, char *line);
+int					ft_exit(void);
 int					key_mapping(int key, t_fdf *fdf);
 void				lets_paint(t_fdf *fdf);
 void				ft_create_image(void *mlx, t_img *image);

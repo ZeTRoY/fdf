@@ -2,11 +2,11 @@
  	was actually made by me in UNIT Factory
 <hr>
 This project is about creating a simplified graphic “wireframe” (“fils de fer” in french, hence the name of the project) representation of a relief landscape linking various points (x, y, z) via segments. The coordinates of this landscape are stored in a file passed as a parameter to the program.
-Each number corresponds to a point in space:
-• The horizontal position corresponds to its axis.
-• The vertical position corresponds to its ordinate.
-• The value corresponds to its altitude.
- Here is an example:
+Each number corresponds to a point in space:  
+• The horizontal position corresponds to its axis.  
+• The vertical position corresponds to its ordinate.  
+• The value corresponds to its altitude.  
+ Here is an example:  
 
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.45.18.png)
 
@@ -37,10 +37,10 @@ Also I have an intro with buttons which we can press to perform some action like
 
 By the way, I have a tracklist which you can listen to. Also you can turn on the next or the previous track by yourself :)
 
-I've got the next tracks here:
-• Ludovico Einaudi - Indaco
-• Kyivstoner - Babosik (also known as Неизвестность - Бабосик)
-• Eldjey - Hey Guys (also known as Элджей - Hey Guys)
+I've got the next tracks here:  
+• Ludovico Einaudi - Indaco  
+• Kyivstoner - Babosik (also known as Неизвестность - Бабосик)  
+• Eldjey - Hey Guys (also known as Элджей - Hey Guys)  
 
 Also you can check it not only on 42.fdf. For example here's a t1.fdf map:
 

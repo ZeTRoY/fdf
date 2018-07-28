@@ -45,6 +45,7 @@ I've got the next tracks here:
 • Kyivstoner - Babosik (also known as Неизвестность - Бабосик)  
 • Eldjey - Hey Guys (also known as Элджей - Hey Guys)  
 
-Also you can check it not only on 42.fdf. For example here's a t1.fdf map:
+Also you can check it not only on 42.fdf.  
+For example here's a t1.fdf map:
 
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.39.30.png)

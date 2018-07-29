@@ -8,8 +8,8 @@ Each number corresponds to a point in space:
 • The horizontal position corresponds to its axis.  
 • The vertical position corresponds to its ordinate.  
 • The value corresponds to its altitude.  
-  
-Here is an example:  
+
+	Here is an example:  
 
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.45.18.png)
   
@@ -28,7 +28,7 @@ After rotating we can see the next:
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.35.45.png)
   
 
-And widthout my info panel:
+And without my info panel:
 
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.36.24.png)
   

@@ -41,7 +41,8 @@
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.34.54.png)
   
 
-	By the way, I have a tracklist which you can listen to. Also you can turn on the next or the previous track by yourself :)
+	By the way, I have a tracklist which you can listen to.
+	Also you can turn on the next or the previous track by yourself :)
 
 &emsp;I've got the next tracks here:  
 &emsp;&emsp;• Ludovico Einaudi - Indaco  

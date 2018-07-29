@@ -1,5 +1,5 @@
-#FdF project of school 42
-	was actually made by me in UNIT Factory
+<h1 align="center">FdF project of school 42</h1>
+<div align="right" style="font-size: 18px">was actually made by me in UNIT Factory</div>
 <hr>
 <h2 align="center">Description</h2>
   

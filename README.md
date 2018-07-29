@@ -34,7 +34,7 @@
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.36.24.png)
   
 
-&emsp;Also I have an intro with buttons which we can press to perform some action like rotating or moving an object.  
+&emsp;Also I have an intro with buttons which you can press to perform some action like rotating or moving an object.  
   
 	Here's what it is:
 
@@ -54,3 +54,5 @@
 	For example here's a t1.fdf map:
 
 ![Picture](https://github.com/ZeTRoY/fdf/blob/master/Images/Screen%20Shot%202018-07-28%20at%2021.39.30.png)
+
+	Be welcome to look through and look onto this project! :)

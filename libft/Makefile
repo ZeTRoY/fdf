@@ -6,7 +6,7 @@
 #    By: aroi <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 17:42:00 by aroi              #+#    #+#              #
-#    Updated: 2018/07/26 11:23:57 by aroi             ###   ########.fr        #
+#    Updated: 2018/07/29 11:21:27 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -218,17 +218,23 @@ OBJ =	color.o \
 		what_is_pt_two.o
 
 %.o: %.c
+	@echo "\033[33mPunch in face!\033[0m"
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@echo "\033[32mOMG! SO MANY HITS! What is it performing!"
+	@echo "The last blow..."
 	@ar rcs $(NAME) $(OBJ)
+	@echo "And the \033[1m$(NAME)\033[0m\033[32m is ready!\033[0m"
 
 clean:
+	@echo "\033[31mTaking out the trash...\033[0m"
 	@rm -rf $(OBJ)
 
 fclean: clean
+	@echo "\033[1;31mlibprintf.a\033[0m\033[31m is out now!\033[0m"
 	@rm -rf $(NAME)
 
 re: fclean all

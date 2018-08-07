@@ -6,58 +6,83 @@
 #    By: aroi <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/14 04:39:27 by aroi              #+#    #+#              #
-#    Updated: 2018/07/29 11:23:30 by aroi             ###   ########.fr        #
+#    Updated: 2018/08/07 12:43:57 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	fdf
+NAME		=	fdf
+OS			=	$(shell uname)
 
-CC		=	gcc
-FLAGS	=	-Wall -Wextra -Werror
-# HEADER	= -I libft/
+CC			=	gcc
+FLAGS		=	-Wall -Wextra -Werror
+HEADER		=	-I libft/includes -I ./includes
 
-SRC		=	main.c \
-			fdf_struct.c \
-			read.c \
-			key_bindings.c \
-			draw_info.c \
-			draw_intro.c \
-			lets_paint.c \
-			bresenham_alg.c \
-			color.c
+ifeq ($(OS), Linux)
+FLAGS_PLUS	= -L ./minilibx -lmlx -lm -lXext -lX11
+else
+FLAGS_PLUS	= -L ./minilibx_macos -lmlx -framework OpenGL -framework AppKit
+endif
 
-OBJ		=	main.o \
-			fdf_struct.o \
-			read.o \
-			key_bindings.o \
-			draw_info.o \
-			draw_intro.o \
-			lets_paint.o \
-			bresenham_alg.o \
-			color.o
+FILES		=	main \
+				fdf_struct \
+				read \
+				key_bindings \
+				draw_info \
+				draw_intro \
+				lets_paint \
+				bresenham_alg \
+				color
 
-%.o: %.c
-	@$(CC) $(FLAGS) -c -o $@ $<
+SRC			=	$(addprefix src/, $(addsuffix .c, $(FILES)))
+OBJ			=	$(addprefix obj/, $(addsuffix .o, $(FILES)))
+
+obj/%.o: src/%.c
+	@$(CC) $(FLAGS) -c -o $@ $< $(HEADER)
 	@echo "\033[32m...Making some magic...\033[0m"
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@echo "\033[32mCrafting \033[1mlibprintf.a\033[0m\033[32m...\033[0m"
+
+$(NAME): libft/libft.a mlx $(OBJ)
 	@make -C libft
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) -I /usr/local/include -L /usr/local/lib \
 	-lmlx libft/libft.a -framework OpenGL -framework AppKit
-	@echo "\033[1;32m$(NAME)\033[0m\033[32m is ready to use!\033[0m"
+	@echo "\033[32m[ ✔ ]\033[1m $(NAME)\033[0m\033[32m is ready to use!\033[0m"
 
-clean:
+libft/libft.a:
+	@echo "\033[32mCrafting \033[1mlibft.a\033[0m\033[32m...\033[0m"
+	@make -C libft
+
+ifeq ($(OS), Linux)
+mlx:
+	@make -C minilibx
+else
+mlx:
+	@make -C minilibx_macos
+endif
+
+
+clean: clean_mlx
 	@make -C libft clean
 	@rm -rf $(OBJ)
 	@echo "\033[31mRemoving object files...\033[0m"
 
-fclean: clean
+ifeq ($(OS), Linux)
+clean_mlx:
+	@make -C minilibx clean
+else
+clean_mlx:
+	@make -C minilibx_macos clean
+endif
+
+fclean: clean_mlx
 	@make -C libft fclean
+	@rm -rf $(OBJ)
 	@rm -rf $(NAME)
-	@echo "\033[31mRemoved \033[1mlibprintf.a\033[0m\033[31m \
-	and \033[1m$(NAME)\033[0m\033[31m files.\033[0m"
+	@echo "\033[31mRemoved \033[1m$(NAME)\033[0m\033[31m file.\033[0m"
+
 
 re: fclean all
+
+.PHONY: all clean
+.NOTPARALLEL: all $(NAME) libft/libft.a mlx clean clean_mlx fclean re

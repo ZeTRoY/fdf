@@ -17,9 +17,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <wchar.h>
+# include "get_next_line.h"
 # include "printf.h"
 
 # define LONG 922337203685477580
+# define intmax_t __intmax_t
+# define uintmax_t __uintmax_t
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

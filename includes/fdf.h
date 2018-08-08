@@ -43,6 +43,26 @@
 # define MACOS_LEFT 123
 # define MACOS_RIGHT 124
 
+# define LINUX_ESC 65307
+# define LINUX_W 119
+# define LINUX_A 97
+# define LINUX_S 115
+# define LINUX_D 100
+# define LINUX_H 104
+# define LINUX_Z 122
+# define LINUX_X 120
+# define LINUX_N 110
+# define LINUX_P 112
+# define LINUX_PLUS 61
+# define LINUX_MINUS 45
+# define LINUX_BACKSPACE 65288
+# define LINUX_PAGE_UP 65365
+# define LINUX_PAGE_DOWN 65366
+# define LINUX_UP 65362
+# define LINUX_LEFT 65361
+# define LINUX_RIGHT 65363
+# define LINUX_DOWN 65364
+
 # define MAX(x, y) x > y ? x : y
 
 typedef struct		s_bresenham

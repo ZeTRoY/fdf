@@ -20,6 +20,8 @@
 # include <stdarg.h>
 # include <stddef.h>
 # include "libft.h"
+# define intmax_t __intmax_t
+# define uintmax_t __uintmax_t
 
 enum				e_cast
 {

@@ -14,9 +14,6 @@
 
 static int			ft_transf_to_bin_dec(uintmax_t n, int qnt)
 {
-	int i;
-
-	i = ft_count_digits_base(n, 10);
 	n = n / ft_pow(10, qnt);
 	n = n % 10;
 	return (n);

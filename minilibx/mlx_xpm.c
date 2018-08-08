@@ -1,9 +1,9 @@
 /*
-** xpm-read.c for MinilibX in 
-** 
+** xpm-read.c for MinilibX in
+**
 ** Made by Charlie Root
 ** Login   <ol@epitech.net>
-** 
+**
 ** Started on  Tue Dec 11 15:25:27 2001 olivier crouzet
 ** Last update Sat Oct  1 14:56:13 2005 Olivier Crouzet
 */
@@ -20,7 +20,35 @@ extern struct s_col_name mlx_col_name[];
                             XFreePixmap(xvar->display,img->pix);free(img);} \
                   return ((void *)0);}
 
+/*
+ * Copy src to string dst of size siz.  At most siz-1 characters
+ * will be copied.  Always NUL terminates (unless siz == 0).
+ * Returns strlen(src); if retval >= siz, truncation occurred.
+ */
+size_t	strlcpy(char *dst, const char *src, size_t siz)
+{
+        char *d = dst;
+        const char *s = src;
+        size_t n = siz;
 
+        /* Copy as many bytes as will fit */
+        if (n != 0 && --n != 0) {
+                do {
+                        if ((*d++ = *s++) == 0)
+                                break;
+                } while (--n != 0);
+        }
+
+        /* Not enough room in dst, add NUL and traverse rest of src */
+        if (n == 0) {
+                if (siz != 0)
+                        *d = '\0';              /* NUL-terminate dst */
+                while (*s++)
+                        ;
+        }
+
+        return(s - src - 1);    /* count does not include NUL */
+}
 
 
 char	*mlx_int_get_line(char *ptr,int *pos,int size)
@@ -176,7 +204,7 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 
       if (!tab[j])
 	RETURN;
-      
+
       if ((rgb_col = mlx_int_get_text_rgb(tab[j], tab[j+1]))==-1)
 	{
 	  if (!(clip_data = malloc(4*width*height)) ||   /* ok, nice size .. */

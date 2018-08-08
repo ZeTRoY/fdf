@@ -100,12 +100,10 @@ static int			ft_what_is_base(t_printf **printf,
 void				ft_is_base(t_printf **printf, va_list apointer)
 {
 	int			base;
-	size_t		i;
 	uintmax_t	z;
 	char		*str;
 	char		*tmp;
 
-	i = 0;
 	base = va_arg(apointer, int);
 	if (!ft_what_is_base(printf, apointer, base))
 		return ;

@@ -19,8 +19,10 @@ HEADER		=	-I libft/includes -I ./includes
 
 ifeq ($(OS), Linux)
 FLAGS_PLUS	= -L ./minilibx -lmlx -lm -lXext -lX11
+HEADER_MLX	= -I ./minilibx
 else
 FLAGS_PLUS	= -L ./minilibx_macos -lmlx -framework OpenGL -framework AppKit
+HEADER_MLX	= -I ./minilibx_macos
 endif
 
 FILES		=	main \
@@ -37,7 +39,7 @@ SRC			=	$(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ			=	$(addprefix obj/, $(addsuffix .o, $(FILES)))
 
 obj/%.o: src/%.c
-	@$(CC) $(FLAGS) -c -o $@ $< $(HEADER)
+	@$(CC) $(FLAGS) -c -o $@ $< $(HEADER) $(HEADER_MLX)
 	@echo "\033[32m...Making some magic...\033[0m"
 
 all: $(NAME)
@@ -45,8 +47,7 @@ all: $(NAME)
 
 $(NAME): libft/libft.a mlx $(OBJ)
 	@make -C libft
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) -I /usr/local/include -L /usr/local/lib \
-	-lmlx libft/libft.a -framework OpenGL -framework AppKit
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(FLAGS_PLUS) -L libft -lft
 	@echo "\033[32m[ ✔ ]\033[1m $(NAME)\033[0m\033[32m is ready to use!\033[0m"
 
 libft/libft.a:

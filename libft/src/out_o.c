@@ -78,12 +78,10 @@ static uintmax_t	o_cast(t_printf **printf, va_list apointer)
 
 void				ft_is_octo(t_printf **printf, va_list apointer)
 {
-	size_t		i;
 	uintmax_t	z;
 	char		*str;
 	char		*tmp;
 
-	i = 0;
 	if (*((*printf)->str) == 'o')
 		(*printf)->conv = 'o';
 	else

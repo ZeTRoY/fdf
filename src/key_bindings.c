@@ -25,25 +25,25 @@ static void			show_help_info(t_fdf *fdf)
 
 static inline void	ft_move_and_rotate_xyz(int key, t_fdf *fdf)
 {
-	if (key == MACOS_W)
+	if (key == MACOS_W || key == LINUX_W)
 		fdf->curry -= 20;
-	else if (key == MACOS_A)
+	else if (key == MACOS_A || key == LINUX_A)
 		fdf->currx -= 20;
-	else if (key == MACOS_D)
+	else if (key == MACOS_D || key == LINUX_D)
 		fdf->currx += 20;
-	else if (key == MACOS_S)
+	else if (key == MACOS_S || key == LINUX_S)
 		fdf->curry += 20;
-	else if (key == MACOS_UP)
+	else if (key == MACOS_UP || key == LINUX_UP)
 		fdf->rot.x_degree += 0.05 * M_PI;
-	else if (key == MACOS_DOWN)
+	else if (key == MACOS_DOWN || key == LINUX_DOWN)
 		fdf->rot.x_degree -= 0.05 * M_PI;
-	else if (key == MACOS_LEFT)
+	else if (key == MACOS_LEFT || key == LINUX_LEFT)
 		fdf->rot.y_degree -= 0.05 * M_PI;
-	else if (key == MACOS_RIGHT)
+	else if (key == MACOS_RIGHT || key == LINUX_RIGHT)
 		fdf->rot.y_degree += 0.05 * M_PI;
-	else if (key == MACOS_Z)
+	else if (key == MACOS_Z || key == LINUX_Z)
 		fdf->rot.z_degree -= 0.05 * M_PI;
-	else if (key == MACOS_X)
+	else if (key == MACOS_X || key == LINUX_X)
 		fdf->rot.z_degree += 0.05 * M_PI;
 }
 
@@ -64,23 +64,21 @@ static inline void	reset(t_fdf *fdf)
 int					key_mapping(int key, t_fdf *fdf)
 {
 	system("afplay -v 0.03 ./music/hitbox.mp3 &");
-	if (key == ESC_BUTTON)
+	ft_move_and_rotate_xyz(key, fdf);
+	if (key == ESC_BUTTON || key == LINUX_ESC)
 		ft_exit();
-	if (key == MACOS_W || key == MACOS_A || key == MACOS_D ||
-	key == MACOS_S || key == MACOS_UP || key == MACOS_DOWN || key == MACOS_LEFT
-	|| key == MACOS_RIGHT || key == MACOS_Z || key == MACOS_X)
-		ft_move_and_rotate_xyz(key, fdf);
-	else if (key == MACOS_PLUS || key == MACOS_PL)
+	else if (key == MACOS_PLUS || key == MACOS_PL || key == LINUX_PLUS)
 		fdf->zoom += 1;
-	else if (key == MACOS_MINUS || key == MACOS_MIN)
+	else if (key == MACOS_MINUS || key == MACOS_MIN || key == LINUX_MINUS)
 		fdf->zoom -= 1;
-	else if (key == MACOS_ARR_UP)
+	else if (key == MACOS_ARR_UP || key == LINUX_PAGE_UP)
 		fdf->height += 0.1;
-	else if (key == MACOS_ARR_DOWN)
+	else if (key == MACOS_ARR_DOWN || key == LINUX_PAGE_DOWN)
 		fdf->height -= 0.1;
-	else if (key == MACOS_BACKSPACE)
+	else if (key == MACOS_BACKSPACE || key == LINUX_BACKSPACE)
 		reset(fdf);
-	else if (key == MACOS_N || key == MACOS_P)
+	else if (key == MACOS_N || key == MACOS_P || key == LINUX_N ||
+			key == LINUX_P)
 		change_music(fdf, key);
 	mlx_clear_window(fdf->mlx, fdf->win);
 	ft_bzero((void *)fdf->img.addr, WIDTH * HEIGHT * 4);

@@ -98,12 +98,10 @@ static uintmax_t	bin_cast(t_printf **printf, va_list apointer)
 
 void				ft_is_bin(t_printf **printf, va_list apointer)
 {
-	size_t		i;
 	uintmax_t	z;
 	char		*str;
 	char		*tmp;
 
-	i = 0;
 	if (*((*printf)->str) == 'b')
 		(*printf)->conv = 'b';
 	else
